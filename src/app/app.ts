@@ -1,14 +1,20 @@
-import { Application, Texture, Container, Sprite, Assets } from 'pixi.js';
-import GameScene from './GameScene';
+import { Application, Texture, Sprite, Assets } from 'pixi.js';
+import GameScene from './containers/GameScene';
+import AlienContainer from './containers/AlienContainer';
 
 export default class App {
   app: any;
   gameScene: GameScene;
+  alienContainer: AlienContainer;
   background: any;
 
   constructor() {
     this.initApplication();
-    this.gameScene = new GameScene(this.app);
+    this.gameScene = new GameScene();
+    this.gameScene.addToAppStage(this.app.stage);
+    this.alienContainer = new AlienContainer({ x: 400, y: 300});
+    this.app.stage.interactive = true;
+    this.alienContainer.addToAppStage(this.app.stage)
     this.initImages();
   }
 
@@ -23,6 +29,7 @@ export default class App {
 
   initImages() {
     Assets.load('../assets/background.jpg').then(this.setupBackgroundImage.bind(this));
+    Assets.load('../assets/sprites/gotoku.json').then(this.setupSprites.bind(this));
   }
 
   setupBackgroundImage(texture: Texture) {
@@ -30,5 +37,9 @@ export default class App {
     this.gameScene.addChild(this.background);
     this.background.width = this.app.screen.width;
     this.background.height = this.app.screen.height;
+  }
+
+  setupSprites(texture: Texture) {
+    console.log(texture);
   }
 }
