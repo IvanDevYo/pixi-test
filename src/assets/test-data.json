@@ -1,10 +1,42 @@
 [
   {
+    "id": 1,
     "posX": 200,
     "alien": "gotoku"
   },
   {
+    "id": 2,
     "posX": 300,
+    "alien": "gotoku"
+  },
+  {
+    "id": 3,
+    "posX": 250,
+    "alien": "gotoku"
+  },
+  {
+    "id": 4,
+    "posX": 350,
+    "alien": "gotoku"
+  },
+  {
+    "id": 5,
+    "posX": 400,
+    "alien": "gotoku"
+  },
+  {
+    "id": 6,
+    "posX": 450,
+    "alien": "gotoku"
+  },
+  {
+    "id": 7,
+    "posX": 100,
+    "alien": "gotoku"
+  },
+  {
+    "id": 8,
+    "posX": -400,
     "alien": "gotoku"
   }
 ]
