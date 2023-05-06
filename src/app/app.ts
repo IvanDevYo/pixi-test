@@ -14,34 +14,47 @@ export default class App {
   testData: AlienOptions[] = [];
 
   constructor(testData: AlienOptions[]) {
-    this.initApplication();
-    this.gameScene = new GameScene();
-    this.gameScene.addToAppStage(this.app.stage);
-    this.alienContainer = new AlienContainer({ x: 400, y: 300});
+    this.app = new Application();
+
+    document.body.style.margin = '0';
+
+    this.app.renderer.view.style.position = 'absolute';
+    this.app.renderer.view.style.display = 'block';
+    this.app.renderer.resize(window.innerWidth, window.innerHeight);
+
+    window.addEventListener('resize', (e) => {
+      this.app.renderer.resize(window.innerWidth, window.innerHeight);
+    });
+
     this.app.stage.interactive = true;
-    this.alienContainer.addToAppStage(this.app.stage)
-    this.initImages();
+
     this.testData = testData;
-    this.setupTestData(this.testData);
+
+    this.gameScene = new GameScene(this.app);
+    this.alienContainer = new AlienContainer(this.app, this.testData, { x: 400, y: 300});
+
+    this.renderApp();
   }
 
-  initApplication() {
-    this.app = new Application({
-      width: 1289,
-      height: 720,
-      background: '#1099bb'
-    });
+  async renderApp() {
+    await this.initImages();
     document.body.appendChild(this.app.view);
+
+    this.app.stage.addChild(this.gameScene.container);
+
+    this.app.stage.addChild(this.alienContainer.container);
   }
 
   initImages() {
-    Assets.load('../assets/background.png').then(this.setupBackgroundImage.bind(this));
-    Assets.load('../assets/scene.png').then(this.setupSceneImage.bind(this));
+    return Promise.all([
+      Assets.load('../assets/background.png').then(this.setupBackgroundImage.bind(this)),
+      Assets.load('../assets/scene.png').then(this.setupSceneImage.bind(this)),
+    ]);
   }
 
   setupBackgroundImage(texture: Texture) {
     this.background = new Sprite(texture);
-    this.gameScene.addChild(this.background);
+    this.gameScene.container.addChild(this.background);
     this.background.width = this.app.screen.width;
     this.background.height = this.app.screen.height / 2 + 85;
     console.log(this.gameScene);
@@ -49,30 +62,9 @@ export default class App {
 
   setupSceneImage(texture: Texture) {
     this.scene = new Sprite(texture);
-    this.alienContainer.addChild(this.scene);
+    this.alienContainer.container.addChild(this.scene);
     this.scene.width = this.app.screen.width;
     this.scene.height = this.app.screen.height / 2;
-    this.scene.anchor.set(0.31, -0.4);
-  }
-
-  async setupTestData(testData: AlienOptions[]) {
-    for (let itemOptions of testData) {
-      const alien = new Gotoku(itemOptions);
-      await alien.load();
-      alien.addToContainer(this.alienContainer.getContainer(), 'walk');
-      this.aliens.push(alien);
-    }
-    this.app.ticker.add(() => this.gameLoop())
-  }
-
-  gameLoop() {
-    for (let alien of this.aliens) {
-      const sprite = alien.getSprite();
-      const posX = sprite instanceof AnimatedSprite ? sprite.x : 0;
-      const container = this.alienContainer.getContainer();
-      if (posX < container.width - 450) {
-        alien.walk(this.alienContainer.getContainer());
-      }
-    }
+    this.scene.anchor.set(0.208, -0.54);
   }
 }

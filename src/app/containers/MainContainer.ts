@@ -1,21 +1,17 @@
-import { Container, Sprite } from 'pixi.js';
+import { Container, Application } from 'pixi.js';
 
 export default class MainContainer {
-  container: Container;
+  app: Application;
+  container: Container = new Container();
 
-  constructor() {
-    this.container = new Container();
+  constructor(app: Application) {
+    this.app = app;
+    this.update = this.update.bind(this);
   }
 
-  getContainer() : Container {
-    return this.container;
+  get height() {
+    return this.container.height;
   }
 
-  addChild(sprite: Sprite) {
-    this.container.addChild(sprite);
-  }
-
-  addToAppStage(appStage: Container) {
-    appStage.addChild(this.container);
-  }
+  update(_: any, delta: number) {}
 }

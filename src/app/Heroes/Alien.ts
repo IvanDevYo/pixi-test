@@ -1,79 +1,53 @@
 import AlienOptions from './AlienInterface';
-import { AnimatedSprite, Container, Assets } from 'pixi.js';
+import AlienContainer from '../containers/AlienContainer';
+import { AnimatedSprite, Assets, Texture, Spritesheet } from 'pixi.js';
 
 type StateType = 'idle' | 'dead' | 'walk';
 
 export default class Alien {
-  sprite: AnimatedSprite | null = null;
-  spriteSheet: any = null;
+  sprite: AnimatedSprite;
+  spriteSheet: Spritesheet;
   state: StateType = 'walk';
   options: AlienOptions;
+  static readonly alienType: string;
 
-  constructor(options: AlienOptions) {
-    this.options = options;
-  }
-
-  getSprite() {
-    return this.sprite;
-  }
-
-  load() : Promise<any> {
-    return Assets.load(`../assets/sprites/${this.options.alien}.json`).then(this.setSpriteSheet.bind(this));
-  }
-
-  setSpriteSheet(spriteSheet: any) {
+  constructor(spriteSheet: Spritesheet, options: AlienOptions) {
     this.spriteSheet = spriteSheet;
-    console.log(this.spriteSheet);
+    this.sprite = new AnimatedSprite(this.spriteSheet.animations[this.state]);
+    this.options = options;
+    this.setPosition(this.options.posX, 0);
+    this.sprite.animationSpeed = 0.1666;
+    this.sprite.interactive = true;
+    this.sprite.cursor = 'pointer';
+    this.sprite.on('pointerdown', this.onClick.bind(this));
+    this.sprite.play();
+  }
+
+  public static load() : Promise<Spritesheet> {
+    return Assets.load(`../assets/sprites/${this.alienType}.json`);
   }
 
   setState(state: StateType) {
     this.state = state;
+    this.sprite.textures = this.spriteSheet.animations[this.state];
   }
 
-  walk(container: Container) {
-    if (this.sprite) {
-      this.setPosition(this.sprite.x + 1, container.height / 2 - 150);
-    }
+  walk(container: AlienContainer) {
+    this.setPosition(this.sprite.x + 1, container.height / 2 - 100);
   }
 
   setPosition(x: number, y: number) {
-    if (this.sprite) {
-      this.sprite.x = x;
-      this.sprite.y = y;
-    }
+    this.sprite.x = x;
+    this.sprite.y = y;
   }
 
   onClick() {
+    this.sprite.stop();
     this.setState('dead');
-    if (this.sprite instanceof AnimatedSprite) {
+    this.sprite.play();
+    setTimeout(() => {
       this.sprite.stop();
-      this.sprite.textures = this.spriteSheet.animations[this.state];
-      this.sprite.play();
-      setTimeout(() => {
-        this.sprite?.stop();
-        this.sprite?.destroy();
-      }, 1);
-    }
-  }
-
-  createSprite() {
-    if (this.spriteSheet) {
-      this.sprite = new AnimatedSprite(this.spriteSheet.animations[this.state]);
-      this.setPosition(this.options.posX, 0);
-      this.sprite.animationSpeed = 0.1666;
-      this.sprite.interactive = true;
-      this.sprite.cursor = 'pointer';
-      this.sprite.on('pointerdown', this.onClick.bind(this));
-      this.sprite.play();
-    }
-  }
-
-  addToContainer(container: Container, state: StateType) {
-    this.setState(state);
-    this.createSprite();
-
-    if (this.sprite) {
-      container.addChild(this.sprite);
-    }
+      this.sprite.destroy();
+    }, 400);
   }
 }
