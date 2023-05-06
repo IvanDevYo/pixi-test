@@ -5,7 +5,7 @@ interface Options {
   y: number,
 }
 
-export default class AlienContainer extends MainContainer{
+export default class AlienContainer extends MainContainer {
   constructor(options? : Options) {
     super();
     if (options) {
