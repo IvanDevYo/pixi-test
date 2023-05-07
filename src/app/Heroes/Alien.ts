@@ -1,6 +1,5 @@
 import AlienOptions from './AlienInterface';
-import AlienContainer from '../containers/AlienContainer';
-import { AnimatedSprite, Assets, Texture, Spritesheet, Application, Container } from 'pixi.js';
+import { AnimatedSprite, Assets, Spritesheet, Application } from 'pixi.js';
 
 type StateType = 'idle' | 'dead' | 'walk';
 
@@ -11,7 +10,6 @@ export default class Alien {
   state: StateType = 'walk';
   isActive: boolean = true;
   options: AlienOptions;
-  eventListener: any;
   static readonly alienType: string;
 
   constructor(app: Application, spriteSheet: Spritesheet, options: AlienOptions) {

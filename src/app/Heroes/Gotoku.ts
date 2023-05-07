@@ -1,6 +1,4 @@
-import { Assets, Spritesheet, Texture } from 'pixi.js';
 import Alien from './Alien';
-import AlienOptions from './AlienInterface';
 
 enum AlienType {
   Gotoku = 'gotoku',

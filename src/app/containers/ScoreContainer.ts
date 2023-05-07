@@ -1,6 +1,6 @@
 import MainContainer from './MainContainer';
-import { Application, Text, TextStyle } from 'pixi.js';
 import AlienContainer from './AlienContainer';
+import { Application, Text, TextStyle } from 'pixi.js';
 
 
 export default class ScoreContainer extends MainContainer {

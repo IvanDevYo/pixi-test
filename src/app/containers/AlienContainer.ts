@@ -1,8 +1,8 @@
 import MainContainer from './MainContainer';
-import AlienOptions from '../Heroes/AlienInterface';
-import { Application } from 'pixi.js';
 import Gotoku from '../Heroes/Gotoku';
 import ResultContainer from './ResultContainer';
+import AlienOptions from '../Heroes/AlienInterface';
+import { Application } from 'pixi.js';
 
 export default class AlienContainer extends MainContainer {
   aliens: Gotoku[] = [];

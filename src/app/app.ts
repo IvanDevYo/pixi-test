@@ -1,10 +1,9 @@
-import { Application, Texture, Sprite, Assets } from 'pixi.js';
 import GameScene from './containers/GameScene';
 import AlienContainer from './containers/AlienContainer';
-import AlienOptions from './Heroes/AlienInterface';
 import ScoreContainer from './containers/ScoreContainer';
 import ResultContainer from './containers/ResultContainer';
-import Gotoku from './Heroes/Gotoku';
+import AlienOptions from './Heroes/AlienInterface';
+import { Application, Texture, Sprite, Assets } from 'pixi.js';
 
 export default class App {
   app: any;
