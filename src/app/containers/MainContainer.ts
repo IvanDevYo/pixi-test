@@ -7,6 +7,7 @@ export default class MainContainer {
   constructor(app: Application) {
     this.app = app;
     this._update = this._update.bind(this);
+    this.app.ticker.add(this._update);
   }
 
   get height() {

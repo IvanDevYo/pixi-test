@@ -22,8 +22,6 @@ export default class ScoreContainer extends MainContainer {
     this.scoreText.x = 50;
     this.scoreText.y = 10;
     this.container.addChild(this.scoreText);
-
-    this.app.ticker.add(this._update);
   }
 
   protected _update(this: any, delta: number) {

@@ -7,6 +7,7 @@ import ResultContainer from './ResultContainer';
 export default class AlienContainer extends MainContainer {
   aliens: Gotoku[] = [];
   resultContainer: ResultContainer;
+  isAliensInitialized: boolean = false;
 
   constructor(app: Application, alienOptions: AlienOptions[], resultContainer: ResultContainer) {
     super(app);
@@ -21,7 +22,7 @@ export default class AlienContainer extends MainContainer {
       this.container.addChild(alien.sprite);
       this.aliens.push(alien);
     }
-    this.app.ticker.add(this._update);
+    this.isAliensInitialized = true;
   }
 
   stopAliens() {
@@ -29,19 +30,20 @@ export default class AlienContainer extends MainContainer {
   }
 
   protected _update(this: any, dt: number): any {
-    if (this.aliens.length === 0) this.resultContainer.setState('win');
-    this.aliens.forEach((alien: Gotoku, index: number) => {
-      if (alien.state === 'dead') {
-        this.aliens.splice(index, 1);
-        return;
-      }
-      if (alien.isActive && alien.sprite.x < this.app.screen.width - 40) {
-        alien.walk();
-      } else {
-        this.resultContainer.setState('lose');
-        this.stopAliens();
-      }
-    });
-    return;
+    if (this.isAliensInitialized) {
+      if (this.aliens.length === 0) this.resultContainer.setState('win');
+      this.aliens.forEach((alien: Gotoku, index: number) => {
+        if (alien.state === 'dead') {
+          this.aliens.splice(index, 1);
+          return;
+        }
+        if (alien.isActive && alien.sprite.x < this.app.screen.width - 40) {
+          alien.walk();
+        } else {
+          this.resultContainer.setState('lose');
+          this.stopAliens();
+        }
+      });
+    }
   }
 }

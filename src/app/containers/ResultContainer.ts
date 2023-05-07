@@ -19,8 +19,6 @@ export default class ResultContainer extends MainContainer {
     this.textResult.x = this.app.screen.width / 2 - 100;
     this.textResult.y = this.app.screen.height / 2 - 50;
     this.container.addChild(this.textResult);
-
-    this.app.ticker.add(this._update);
   }
 
   setState(state: ResultState) {

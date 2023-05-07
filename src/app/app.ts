@@ -4,6 +4,7 @@ import AlienContainer from './containers/AlienContainer';
 import AlienOptions from './Heroes/AlienInterface';
 import ScoreContainer from './containers/ScoreContainer';
 import ResultContainer from './containers/ResultContainer';
+import Gotoku from './Heroes/Gotoku';
 
 export default class App {
   app: any;
@@ -51,9 +52,7 @@ export default class App {
   }
 
   initImages() {
-    return Promise.all([
-      Assets.load('../assets/background.jpg').then(this.setupBackgroundImage.bind(this)),
-    ]);
+    return Assets.load('../assets/background.jpg').then(this.setupBackgroundImage.bind(this));
   }
 
   setupBackgroundImage(texture: Texture) {
