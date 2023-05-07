@@ -8,8 +8,4 @@ enum AlienType {
 
 export default class Gotoku extends Alien {
   static readonly alienType: AlienType = AlienType.Gotoku;
-
-  constructor(spriteSheet: Spritesheet, options: AlienOptions) {
-    super(spriteSheet, options);
-  }
 }

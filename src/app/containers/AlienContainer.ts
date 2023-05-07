@@ -17,7 +17,7 @@ export default class AlienContainer extends MainContainer {
   async initAliens(alienOptions: AlienOptions[]) {
     const spriteSheet = await Gotoku.load();
     for (let itemOptions of alienOptions) {
-      const alien = new Gotoku(spriteSheet, itemOptions);
+      const alien = new Gotoku(this.app, spriteSheet, itemOptions);
       this.container.addChild(alien.sprite);
       this.aliens.push(alien);
     }
@@ -30,7 +30,7 @@ export default class AlienContainer extends MainContainer {
         return;
       }
       if (alien.sprite && alien.sprite.x < this.app.screen.width - 40) {
-        alien.walk(this.app);
+        alien.walk();
       }
     });
     return;

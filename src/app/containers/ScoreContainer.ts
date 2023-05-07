@@ -15,7 +15,7 @@ export default class ScoreContainer extends MainContainer {
     const style = new TextStyle({
       fontFamily: 'Arial',
       fontSize: 28,
-      fill: 'black',
+      fill: 0x000000,
     });
 
     this.scoreText = new Text('', style);

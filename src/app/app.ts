@@ -1,7 +1,6 @@
-import { Application, Texture, Sprite, Assets, AnimatedSprite } from 'pixi.js';
+import { Application, Texture, Sprite, Assets } from 'pixi.js';
 import GameScene from './containers/GameScene';
 import AlienContainer from './containers/AlienContainer';
-import Gotoku from './Heroes/Gotoku';
 import AlienOptions from './Heroes/AlienInterface';
 import ScoreContainer from './containers/ScoreContainer';
 
@@ -10,7 +9,6 @@ export default class App {
   gameScene: GameScene;
   alienContainer: AlienContainer;
   scoreContainer: ScoreContainer;
-  aliens: Gotoku[] = [];
   background: Sprite = new Sprite();
   testData: AlienOptions[] = [];
 
@@ -61,5 +59,9 @@ export default class App {
     this.gameScene.container.addChild(this.background);
     this.background.width = this.app.screen.width;
     this.background.height = this.app.screen.height;
+    window.addEventListener('resize', (e) => {
+      this.background.width = this.app.screen.width;
+      this.background.height = this.app.screen.height;
+    });
   }
 }
