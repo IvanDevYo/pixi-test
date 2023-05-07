@@ -11,6 +11,7 @@ export default class Alien {
   state: StateType = 'walk';
   isActive: boolean = true;
   options: AlienOptions;
+  eventListener: any;
   static readonly alienType: string;
 
   constructor(app: Application, spriteSheet: Spritesheet, options: AlienOptions) {
@@ -19,13 +20,11 @@ export default class Alien {
     this.sprite = new AnimatedSprite(this.spriteSheet.animations[this.state]);
     this.options = options;
     this.setPosition(this.options.posX, 0);
-    window.addEventListener('resize', (e) => {
-      this.sprite.y = this.app.screen.height / 100 * 68;
-    });
     this.sprite.anchor.set(0.5, 1);
     this.sprite.animationSpeed = 0.2;
     this.sprite.interactive = true;
     this.sprite.cursor = 'pointer';
+    window.addEventListener('resize', this.onResize.bind(this));
     this.sprite.on('pointerdown', this.onClick.bind(this));
     this.sprite.play();
   }
@@ -45,12 +44,19 @@ export default class Alien {
 
   stop() {
     this.sprite.stop();
+    this.sprite.interactive = false;
     this.isActive = false;
   }
 
   setPosition(x: number, y: number) {
     this.sprite.x = x;
     this.sprite.y = y;
+  }
+
+  onResize() {
+    if (this.state !== 'dead') {
+      this.setPosition(this.sprite.x, this.app.screen.height / 100 * 68);
+    }
   }
 
   onClick() {

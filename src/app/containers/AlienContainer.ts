@@ -11,7 +11,6 @@ export default class AlienContainer extends MainContainer {
   constructor(app: Application, alienOptions: AlienOptions[], resultContainer: ResultContainer) {
     super(app);
     this.resultContainer = resultContainer;
-    this.container.zIndex = -1;
     this._initAliens(alienOptions);
   }
 
