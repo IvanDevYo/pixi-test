@@ -15,6 +15,7 @@ export default class App {
 
   constructor(testData: AlienOptions[]) {
     this.app = new Application();
+    (globalThis as any).__PIXI_APP__ = this.app;
 
     document.body.style.margin = '0';
 
@@ -31,7 +32,7 @@ export default class App {
     this.testData = testData;
 
     this.gameScene = new GameScene(this.app);
-    this.alienContainer = new AlienContainer(this.app, this.testData, { x: 400, y: 300});
+    this.alienContainer = new AlienContainer(this.app, this.testData);
 
     this.renderApp();
   }
@@ -47,8 +48,7 @@ export default class App {
 
   initImages() {
     return Promise.all([
-      Assets.load('../assets/background.png').then(this.setupBackgroundImage.bind(this)),
-      Assets.load('../assets/scene.png').then(this.setupSceneImage.bind(this)),
+      Assets.load('../assets/background.jpg').then(this.setupBackgroundImage.bind(this)),
     ]);
   }
 
@@ -56,15 +56,6 @@ export default class App {
     this.background = new Sprite(texture);
     this.gameScene.container.addChild(this.background);
     this.background.width = this.app.screen.width;
-    this.background.height = this.app.screen.height / 2 + 85;
-    console.log(this.gameScene);
-  }
-
-  setupSceneImage(texture: Texture) {
-    this.scene = new Sprite(texture);
-    this.alienContainer.container.addChild(this.scene);
-    this.scene.width = this.app.screen.width;
-    this.scene.height = this.app.screen.height / 2;
-    this.scene.anchor.set(0.208, -0.54);
+    this.background.height = this.app.screen.height;
   }
 }

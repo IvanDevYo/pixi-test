@@ -16,11 +16,9 @@ enum AlienType {
 export default class AlienContainer extends MainContainer {
   aliens: Gotoku[] = [];
 
-  constructor(app: Application, alienOptions: AlienOptions[], options? : Options) {
+  constructor(app: Application, alienOptions: AlienOptions[]) {
     super(app);
-    if (options) {
-      this.setContainerPosition(options);
-    }
+    this.container.zIndex = -1;
     this.initAliens(alienOptions);
     this.app.ticker.add(this.update);
   }
@@ -45,8 +43,8 @@ export default class AlienContainer extends MainContainer {
         this.aliens.splice(index, 1);
         return;
       }
-      if (alien.sprite && alien.sprite.x < this.container.width - 450) {
-        alien.walk(this);
+      if (alien.sprite && alien.sprite.x < 1900) {
+        alien.walk(this.app);
       }
     });
     return;

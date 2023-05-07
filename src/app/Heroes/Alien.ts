@@ -1,6 +1,6 @@
 import AlienOptions from './AlienInterface';
 import AlienContainer from '../containers/AlienContainer';
-import { AnimatedSprite, Assets, Texture, Spritesheet } from 'pixi.js';
+import { AnimatedSprite, Assets, Texture, Spritesheet, Application, Container } from 'pixi.js';
 
 type StateType = 'idle' | 'dead' | 'walk';
 
@@ -32,8 +32,8 @@ export default class Alien {
     this.sprite.textures = this.spriteSheet.animations[this.state];
   }
 
-  walk(container: AlienContainer) {
-    this.setPosition(this.sprite.x + 1, container.height / 2 - 100);
+  walk(app: Application) {
+    this.setPosition(this.sprite.x + 1, app.screen.height / 100 * 60);
   }
 
   setPosition(x: number, y: number) {
