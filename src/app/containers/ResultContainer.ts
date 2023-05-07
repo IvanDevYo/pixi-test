@@ -28,7 +28,7 @@ export default class ResultContainer extends MainContainer {
   protected _update(this: any, delta: number) {
     switch (this.state) {
       case 'win': this.textResult.text = 'Победа!'; break;
-      case 'lose': this.textResult.text = 'Поражение'; break;
+      case 'lose': this.textResult.text = 'Потрачено'; break;
       case 'idle': this.textResult.text = ''; break;
     }
   }
