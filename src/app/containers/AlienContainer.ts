@@ -43,7 +43,7 @@ export default class AlienContainer extends MainContainer {
         this.aliens.splice(index, 1);
         return;
       }
-      if (alien.sprite && alien.sprite.x < 1900) {
+      if (alien.sprite && alien.sprite.x < this.app.screen.width - 40) {
         alien.walk(this.app);
       }
     });

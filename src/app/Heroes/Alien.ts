@@ -33,7 +33,7 @@ export default class Alien {
   }
 
   walk(app: Application) {
-    this.setPosition(this.sprite.x + 1, app.screen.height / 100 * 60);
+    this.setPosition(this.sprite.x + 2, app.screen.height / 100 * 61);
   }
 
   setPosition(x: number, y: number) {
@@ -47,7 +47,7 @@ export default class Alien {
     this.sprite.play();
     setTimeout(() => {
       this.sprite.stop();
-      this.sprite.destroy();
+      if (this.sprite.texture) this.sprite.destroy();
     }, 400);
   }
 }
