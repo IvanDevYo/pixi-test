@@ -3,11 +3,13 @@ import GameScene from './containers/GameScene';
 import AlienContainer from './containers/AlienContainer';
 import Gotoku from './Heroes/Gotoku';
 import AlienOptions from './Heroes/AlienInterface';
+import ScoreContainer from './containers/ScoreContainer';
 
 export default class App {
   app: any;
   gameScene: GameScene;
   alienContainer: AlienContainer;
+  scoreContainer: ScoreContainer;
   aliens: Gotoku[] = [];
   background: Sprite = new Sprite();
   testData: AlienOptions[] = [];
@@ -32,6 +34,7 @@ export default class App {
 
     this.gameScene = new GameScene(this.app);
     this.alienContainer = new AlienContainer(this.app, this.testData);
+    this.scoreContainer = new ScoreContainer(this.app, this.alienContainer);
 
     this.renderApp();
   }
@@ -43,6 +46,8 @@ export default class App {
     this.app.stage.addChild(this.gameScene.container);
 
     this.app.stage.addChild(this.alienContainer.container);
+
+    this.app.stage.addChild(this.scoreContainer.container);
   }
 
   initImages() {

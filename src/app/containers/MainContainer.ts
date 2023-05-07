@@ -13,5 +13,5 @@ export default class MainContainer {
     return this.container.height;
   }
 
-  update(_: any, delta: number) {}
+  update(this: any, delta: number) {}
 }
