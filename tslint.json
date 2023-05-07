@@ -10,6 +10,8 @@
       140
     ],
     "no-console": false,
+    "no-unused-expression": false,
+    "no-empty": false,
     "quotemark": [
       true,
       "single"

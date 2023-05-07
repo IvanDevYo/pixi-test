@@ -17,7 +17,7 @@ export default class AlienContainer extends MainContainer {
 
   private async _initAliens(alienOptions: AlienOptions[]) {
     const spriteSheet = await Gotoku.load();
-    for (let itemOptions of alienOptions) {
+    for (const itemOptions of alienOptions) {
       const alien = new Gotoku(this.app, spriteSheet, itemOptions);
       this.container.addChild(alien.sprite);
       this.aliens.push(alien);
