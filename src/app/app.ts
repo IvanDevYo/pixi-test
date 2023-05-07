@@ -3,12 +3,14 @@ import GameScene from './containers/GameScene';
 import AlienContainer from './containers/AlienContainer';
 import AlienOptions from './Heroes/AlienInterface';
 import ScoreContainer from './containers/ScoreContainer';
+import ResultContainer from './containers/ResultContainer';
 
 export default class App {
   app: any;
   gameScene: GameScene;
   alienContainer: AlienContainer;
   scoreContainer: ScoreContainer;
+  resultContainer: ResultContainer;
   background: Sprite = new Sprite();
   testData: AlienOptions[] = [];
 
@@ -31,7 +33,8 @@ export default class App {
     this.testData = testData;
 
     this.gameScene = new GameScene(this.app);
-    this.alienContainer = new AlienContainer(this.app, this.testData);
+    this.resultContainer = new ResultContainer(this.app);
+    this.alienContainer = new AlienContainer(this.app, this.testData, this.resultContainer);
     this.scoreContainer = new ScoreContainer(this.app, this.alienContainer);
 
     this.renderApp();
@@ -41,11 +44,10 @@ export default class App {
     await this.initImages();
     document.body.appendChild(this.app.view);
 
-    this.app.stage.addChild(this.gameScene.container);
-
-    this.app.stage.addChild(this.alienContainer.container);
-
-    this.app.stage.addChild(this.scoreContainer.container);
+    this.gameScene.addToApplication();
+    this.resultContainer.addToApplication();
+    this.alienContainer.addToApplication();
+    this.scoreContainer.addToApplication();
   }
 
   initImages() {

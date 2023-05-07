@@ -1,36 +1,46 @@
 import MainContainer from './MainContainer';
 import AlienOptions from '../Heroes/AlienInterface';
-import { AnimatedSprite, Application, TickerCallback } from 'pixi.js';
+import { Application } from 'pixi.js';
 import Gotoku from '../Heroes/Gotoku';
-import Alien from '../Heroes/Alien';
+import ResultContainer from './ResultContainer';
 
 export default class AlienContainer extends MainContainer {
   aliens: Gotoku[] = [];
+  resultContainer: ResultContainer;
 
-  constructor(app: Application, alienOptions: AlienOptions[]) {
+  constructor(app: Application, alienOptions: AlienOptions[], resultContainer: ResultContainer) {
     super(app);
+    this.resultContainer = resultContainer;
     this.container.zIndex = -1;
-    this.initAliens(alienOptions);
-    this.app.ticker.add(this.update);
+    this._initAliens(alienOptions);
   }
 
-  async initAliens(alienOptions: AlienOptions[]) {
+  private async _initAliens(alienOptions: AlienOptions[]) {
     const spriteSheet = await Gotoku.load();
     for (let itemOptions of alienOptions) {
       const alien = new Gotoku(this.app, spriteSheet, itemOptions);
       this.container.addChild(alien.sprite);
       this.aliens.push(alien);
     }
+    this.app.ticker.add(this._update);
   }
 
-  update(this: any, dt: number): any {
+  stopAliens() {
+    this.aliens.forEach((alien: Gotoku) => alien.stop());
+  }
+
+  protected _update(this: any, dt: number): any {
+    if (this.aliens.length === 0) this.resultContainer.setState('win');
     this.aliens.forEach((alien: Gotoku, index: number) => {
       if (alien.state === 'dead') {
         this.aliens.splice(index, 1);
         return;
       }
-      if (alien.sprite && alien.sprite.x < this.app.screen.width - 40) {
+      if (alien.isActive && alien.sprite.x < this.app.screen.width - 40) {
         alien.walk();
+      } else {
+        this.resultContainer.setState('lose');
+        this.stopAliens();
       }
     });
     return;

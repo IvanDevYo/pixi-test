@@ -9,6 +9,7 @@ export default class Alien {
   sprite: AnimatedSprite;
   spriteSheet: Spritesheet;
   state: StateType = 'walk';
+  isActive: boolean = true;
   options: AlienOptions;
   static readonly alienType: string;
 
@@ -42,6 +43,11 @@ export default class Alien {
     this.setPosition(this.sprite.x + 2, this.app.screen.height / 100 * 68);
   }
 
+  stop() {
+    this.sprite.stop();
+    this.isActive = false;
+  }
+
   setPosition(x: number, y: number) {
     this.sprite.x = x;
     this.sprite.y = y;
@@ -52,7 +58,7 @@ export default class Alien {
     this.setState('dead');
     this.sprite.play();
     setTimeout(() => {
-      this.sprite.stop();
+      this.stop();
       if (this.sprite.texture) this.sprite.destroy();
     }, 400);
   }

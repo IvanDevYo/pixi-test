@@ -6,12 +6,16 @@ export default class MainContainer {
 
   constructor(app: Application) {
     this.app = app;
-    this.update = this.update.bind(this);
+    this._update = this._update.bind(this);
   }
 
   get height() {
     return this.container.height;
   }
 
-  update(this: any, delta: number) {}
+  protected _update(this: any, delta: number) {}
+
+  public addToApplication() {
+    this.app.stage.addChild(this.container);
+  }
 }

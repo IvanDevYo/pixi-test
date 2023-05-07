@@ -23,10 +23,10 @@ export default class ScoreContainer extends MainContainer {
     this.scoreText.y = 10;
     this.container.addChild(this.scoreText);
 
-    this.app.ticker.add(this.update);
+    this.app.ticker.add(this._update);
   }
 
-  update(this: any, delta: number) {
+  protected _update(this: any, delta: number) {
     this.scoreText.text = `Осталось врагов ${this.alienContainer.aliens.length}`;
   }
 }
