@@ -9,8 +9,7 @@ export default class App {
   gameScene: GameScene;
   alienContainer: AlienContainer;
   aliens: Gotoku[] = [];
-  background: any;
-  scene: any;
+  background: Sprite = new Sprite();
   testData: AlienOptions[] = [];
 
   constructor(testData: AlienOptions[]) {
@@ -53,7 +52,7 @@ export default class App {
   }
 
   setupBackgroundImage(texture: Texture) {
-    this.background = new Sprite(texture);
+    this.background.texture = texture;
     this.gameScene.container.addChild(this.background);
     this.background.width = this.app.screen.width;
     this.background.height = this.app.screen.height;

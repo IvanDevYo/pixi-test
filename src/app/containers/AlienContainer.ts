@@ -4,15 +4,6 @@ import { AnimatedSprite, Application, TickerCallback } from 'pixi.js';
 import Gotoku from '../Heroes/Gotoku';
 import Alien from '../Heroes/Alien';
 
-interface Options {
-  x: number,
-  y: number,
-}
-
-enum AlienType {
-  Gotoku = 'gotoku',
-}
-
 export default class AlienContainer extends MainContainer {
   aliens: Gotoku[] = [];
 
@@ -21,11 +12,6 @@ export default class AlienContainer extends MainContainer {
     this.container.zIndex = -1;
     this.initAliens(alienOptions);
     this.app.ticker.add(this.update);
-  }
-
-  setContainerPosition(options: Options) {
-    this.container.x = options.x;
-    this.container.y = options.y;
   }
 
   async initAliens(alienOptions: AlienOptions[]) {
