@@ -16,13 +16,17 @@ export default class ResultContainer extends MainContainer {
     });
 
     this.textResult = new Text('', style);
-    this.textResult.x = this.app.screen.width / 2 - 100;
-    this.textResult.y = this.app.screen.height / 2 - 50;
+    this._onResize();
     this.container.addChild(this.textResult);
   }
 
-  setState(state: ResultState) {
+  public setState(state: ResultState) {
     this.state = state;
+  }
+
+  protected _onResize() {
+    this.textResult.x = this.app.screen.width / 2 - 100;
+    this.textResult.y = this.app.screen.height / 2 - 50;
   }
 
   protected _update(this: any, delta: number) {

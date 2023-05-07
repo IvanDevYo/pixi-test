@@ -3,7 +3,7 @@ import AlienContainer from './containers/AlienContainer';
 import ScoreContainer from './containers/ScoreContainer';
 import ResultContainer from './containers/ResultContainer';
 import AlienOptions from './Heroes/AlienInterface';
-import { Application, Texture, Sprite, Assets } from 'pixi.js';
+import { Application } from 'pixi.js';
 
 export default class App {
   app: any;
@@ -11,7 +11,6 @@ export default class App {
   alienContainer: AlienContainer;
   scoreContainer: ScoreContainer;
   resultContainer: ResultContainer;
-  background: Sprite = new Sprite();
   testData: AlienOptions[] = [];
 
   constructor(testData: AlienOptions[]) {
@@ -40,28 +39,12 @@ export default class App {
     this.renderApp();
   }
 
-  async renderApp() {
-    await this.initImages();
+  renderApp() {
     document.body.appendChild(this.app.view);
 
     this.gameScene.addToApplication();
     this.resultContainer.addToApplication();
     this.alienContainer.addToApplication();
     this.scoreContainer.addToApplication();
-  }
-
-  initImages() {
-    return Assets.load('../assets/background.jpg').then(this.setupBackgroundImage.bind(this));
-  }
-
-  setupBackgroundImage(texture: Texture) {
-    this.background.texture = texture;
-    this.gameScene.container.addChild(this.background);
-    this.background.width = this.app.screen.width;
-    this.background.height = this.app.screen.height;
-    window.addEventListener('resize', (e) => {
-      this.background.width = this.app.screen.width;
-      this.background.height = this.app.screen.height;
-    });
   }
 }

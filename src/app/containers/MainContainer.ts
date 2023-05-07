@@ -8,11 +8,10 @@ export default class MainContainer {
     this.app = app;
     this._update = this._update.bind(this);
     this.app.ticker.add(this._update);
+    window.addEventListener('resize', this._onResize.bind(this));
   }
 
-  get height() {
-    return this.container.height;
-  }
+  protected _onResize() {}
 
   protected _update(this: any, delta: number) {}
 
