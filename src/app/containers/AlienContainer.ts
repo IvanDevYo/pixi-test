@@ -6,12 +6,12 @@ import { Application } from 'pixi.js';
 
 export default class AlienContainer extends MainContainer {
   aliens: Gotoku[] = [];
-  resultContainer: ResultContainer;
-  isAliensInitialized: boolean = false;
+  private _resultContainer: ResultContainer;
+  private _isAliensInitialized: boolean = false;
 
   constructor(app: Application, alienOptions: AlienOptions[], resultContainer: ResultContainer) {
     super(app);
-    this.resultContainer = resultContainer;
+    this._resultContainer = resultContainer;
     this._initAliens(alienOptions);
   }
 
@@ -22,16 +22,16 @@ export default class AlienContainer extends MainContainer {
       this.container.addChild(alien.sprite);
       this.aliens.push(alien);
     }
-    this.isAliensInitialized = true;
+    this._isAliensInitialized = true;
   }
 
-  stopAliens() {
+  private _stopAliens() {
     this.aliens.forEach((alien: Gotoku) => alien.stop());
   }
 
   protected _update(this: any, dt: number): any {
-    if (this.isAliensInitialized) {
-      if (this.aliens.length === 0) this.resultContainer.setState('win');
+    if (this._isAliensInitialized) {
+      if (this.aliens.length === 0) this._resultContainer.setState('win');
       this.aliens.forEach((alien: Gotoku, index: number) => {
         if (alien.state === 'dead') {
           this.aliens.splice(index, 1);
@@ -40,8 +40,8 @@ export default class AlienContainer extends MainContainer {
         if (alien.isActive && alien.sprite.x < this.app.screen.width - 40) {
           alien.walk();
         } else {
-          this.resultContainer.setState('lose');
-          this.stopAliens();
+          this._resultContainer.setState('lose');
+          this._stopAliens();
         }
       });
     }
