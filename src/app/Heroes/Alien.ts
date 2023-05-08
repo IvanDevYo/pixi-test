@@ -15,20 +15,28 @@ export default class Alien {
   constructor(app: Application, spriteSheet: Spritesheet, options: AlienOptions) {
     this.app = app;
     this.spriteSheet = spriteSheet;
-    this.sprite = new AnimatedSprite(this.spriteSheet.animations[this.state]);
     this.options = options;
-    this.setPosition(this.options.posX, 0);
-    this.sprite.anchor.set(0.5, 1);
-    this.sprite.animationSpeed = 0.2;
-    this.sprite.interactive = true;
-    this.sprite.cursor = 'pointer';
-    window.addEventListener('resize', this.onResize.bind(this));
-    this.sprite.on('pointerdown', this.onClick.bind(this));
+
+    this.sprite = new AnimatedSprite(this.spriteSheet.animations[this.state]);
+
+    this._setInitialSpriteOptions();
+
     this.sprite.play();
   }
 
   public static load() : Promise<Spritesheet> {
     return Assets.load(`../assets/sprites/${this.alienType}.json`);
+  }
+
+  private _setInitialSpriteOptions() {
+    this.setPosition(this.options.posX, 0);
+    this.sprite.anchor.set(0.5, 1);
+    this.sprite.animationSpeed = 0.2;
+    this.sprite.interactive = true;
+    this.sprite.cursor = 'pointer';
+
+    window.addEventListener('resize', this.onResize.bind(this));
+    this.sprite.on('pointerdown', this.onClick.bind(this));
   }
 
   setState(state: StateType) {
