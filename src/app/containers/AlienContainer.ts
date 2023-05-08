@@ -32,6 +32,7 @@ export default class AlienContainer extends MainContainer {
   protected _update(this: any, dt: number): any {
     if (this._isAliensInitialized) {
       if (this.aliens.length === 0) this._resultContainer.setState('win');
+
       this.aliens.forEach((alien: Gotoku, index: number) => {
         if (alien.state === 'dead') {
           this.aliens.splice(index, 1);
